@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClassSummaryActivity"
+    android:orientation="vertical"
+    android:background="#d6dce5"
+    >
+    <!--   page title-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Class Lectures"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:background="#d6dce5"/>
+
+    <!--    button pannel-->
+    <ListView
+        android:id="@+id/lvLec"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Back"
+            android:backgroundTint="#d6dce5"
+            android:textColor="@color/black"/>
+        <Button
+            android:id="@+id/btnAddNew"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Add New"
+            android:backgroundTint="#d6dce5"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+</LinearLayout>

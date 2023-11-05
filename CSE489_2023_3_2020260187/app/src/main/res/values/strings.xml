@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CSE489_2023_3_2020260187</string>
+
+    <string name="loginlink">
+        <a href="www.google,com">Login</a>
+    </string>
+
+    <string name="signuplink">
+        <a href="www.facebook.com">Sign Up</a>
+    </string>
+
+</resources>
+
