@@ -83,23 +83,27 @@ public class SignupLoginActivity extends Activity {
                 }
 
 
-                if (TextUtils.isEmpty(email.getText().toString()) && !Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
+
+                else if(TextUtils.isEmpty(email.getText().toString())  ){
+                    email.setError("email is not filled");
+                }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()){
                     email.setError("email is not valid");
                 }
 
-                if (TextUtils.isEmpty(phone.getText().toString())){
+                else if (TextUtils.isEmpty(phone.getText().toString())){
                     phone.setError("phone number is must");
                 }
 
-                if (TextUtils.isEmpty(user_id.getText().toString())){
+                else if (TextUtils.isEmpty(user_id.getText().toString())){
                     user_id.setError("userid is must");
                 }
 
-                if (TextUtils.isEmpty(passord.getText().toString())){
+                else if (TextUtils.isEmpty(passord.getText().toString())){
                     passord.setError("password is must");
                 }
 
-                if (TextUtils.isEmpty(re_enterpassword.getText().toString()) && re_enterpassword.getText().toString()!=passord.getText().toString() ){
+                else if (!passord.getText().toString().equals(re_enterpassword.getText().toString()) ){
                     re_enterpassword.setError("re enter password is not matched");
                 }
 
