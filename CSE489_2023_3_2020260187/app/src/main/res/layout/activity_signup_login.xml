@@ -40,6 +40,8 @@
                 android:id="@+id/signupEtName"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="enter your name"
                 android:inputType="text"/>
         </TableRow>
 
@@ -59,6 +61,8 @@
                 android:id="@+id/signupEtEmail"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="enter your email address"
                 android:inputType="textEmailAddress"/>
         </TableRow>
 
@@ -79,6 +83,8 @@
                 android:id="@+id/signupEtPhone"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="enter your phone no"
                 android:inputType="phone"/>
         </TableRow>
 
@@ -97,6 +103,8 @@
                 android:id="@+id/signupEtUserId"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="enter your id"
                 android:inputType="text"/>
         </TableRow>
 
@@ -115,6 +123,8 @@
                 android:id="@+id/signupEtPassword"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="enter a strong password"
                 android:inputType="numberPassword"/>
         </TableRow>
 
@@ -123,6 +133,7 @@
             <TextView
                 android:text="Re-Password :"
                 android:textSize="16sp"
+
                 android:layout_marginRight="12dp"
                 android:textStyle="bold"/>
 <!--            <TextView-->
@@ -134,6 +145,8 @@
                 android:id="@+id/signupEtRePassword"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
+                android:hint="re-enter password"
                 android:inputType="numberPassword"/>
         </TableRow>
 
@@ -163,8 +176,8 @@
 
             <TextView
                 android:id="@+id/loginLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="Login"
@@ -184,7 +197,8 @@
             android:id="@+id/btnExit"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+
+            android:layout_height="48dp"
             android:text="Exit"
             android:backgroundTint="#ffff00"
             android:textColor="#000000"
@@ -194,7 +208,7 @@
             android:id="@+id/btnGo"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:text="Go"
             android:backgroundTint="#ffff00"
             android:textColor="#000000"

@@ -168,9 +168,11 @@
                 android:paddingRight="8dp"/>
             <EditText
                 android:id="@+id/date"
-                android:layout_width="0dp"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text=""
+                android:hint="enter the date"
                 android:textSize="16sp"
                 android:inputType="date"/>
         </TableRow>
@@ -191,6 +193,7 @@
                 android:id="@+id/etLecture"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="48dp"
                 android:text=""
                 android:textSize="16sp"
                 android:inputType="numberSigned"
@@ -211,7 +214,8 @@
                 android:paddingRight="8dp"/>
             <EditText
                 android:id="@+id/etTopic"
-                android:layout_width="0dp"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text=""
                 android:textSize="16sp"

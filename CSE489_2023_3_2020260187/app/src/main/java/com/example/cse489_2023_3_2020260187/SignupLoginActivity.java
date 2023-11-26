@@ -32,6 +32,17 @@ public class SignupLoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_login);
 
+        //stayes logged in
+
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        String checkbox = preferences.getString("remember","");
+        if (checkbox.equals("true")){
+
+            Intent intent = new Intent(SignupLoginActivity.this,ClassLecturesActivity.class);
+            startActivity(intent);
+        }
+
+
         loginToggleLabel = findViewById(R.id.loginToggleLabel);
         signup = findViewById(R.id.signup);
         loginLink = findViewById(R.id.loginLink);
@@ -124,18 +135,34 @@ public class SignupLoginActivity extends Activity {
                       edit.putString("user_id", user_id.getText().toString());
                       edit.putString("password", passord.getText().toString());
                       edit.putString("re_enterpassword", re_enterpassword.getText().toString());
-                      edit.putBoolean("remember_userid", false);
-                      edit.putBoolean("remember_passord", false);
+//                      edit.putBoolean("remember_userid", false);
+//                      edit.putBoolean("remember_passord", false);
                       edit.apply();
 
 
 //                    Intent intent = SignupLoginActivity.this.getIntent();
 //                    intent.putExtra("username", (CharSequence) name);
                     Intent intent = new Intent(SignupLoginActivity.this, ClassLecturesActivity.class);
-                    intent.putExtra("UserName", name.getText().toString());
+//                    intent.putExtra("UserName", name.getText().toString());
+                    intent.putExtra("id", user_id.getText().toString());
+                    intent.putExtra("name",name.getText().toString());
                     startActivity(intent);
 
 
+                    //STAYS LOGGED IN..
+
+                    if (remenber_userid.isChecked()){
+                        SharedPreferences preferences = SignupLoginActivity.this.getSharedPreferences("checkbox", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("remember", "true");
+                        editor.apply();
+                    } else if (!remenber_userid.isChecked()) {
+
+                        SharedPreferences preferences = SignupLoginActivity.this.getSharedPreferences("checkbox", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("remember", "false");
+                        editor.apply();
+                    }
 
 
                 }

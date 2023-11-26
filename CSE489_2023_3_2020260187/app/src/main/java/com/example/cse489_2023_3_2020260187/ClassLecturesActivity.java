@@ -12,6 +12,8 @@ import android.widget.Button;
 public class ClassLecturesActivity extends AppCompatActivity {
 
     Button addNew, Back ;
+//    ClassSummaryDB classSummaryDB;
+//    ClassSummary classSummary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +22,12 @@ public class ClassLecturesActivity extends AppCompatActivity {
 
         // calling the value from signup activity
         Intent intent = this.getIntent();
-        String username = intent.getStringExtra("UserName");
+        String username = intent.getStringExtra("name");
+        String id = intent.getStringExtra("id");
 
-        System.out.println(username);
+
+
+//        System.out.println(username);
 
 //        SharedPreferences localPref = ClassLecturesActivity.this.getPreferences(MODE_PRIVATE);
 //        String useername = localPref.getString("name","");
@@ -31,6 +36,8 @@ public class ClassLecturesActivity extends AppCompatActivity {
 
         addNew = findViewById(R.id.btnAddNew);
 
+        loadClassSummary();
+
 
 
 
@@ -38,23 +45,25 @@ public class ClassLecturesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 Intent intent = new Intent(ClassLecturesActivity.this, ClassSummaryActivity.class);
-                intent.putExtra("id", "2020-2-60-187");
-                intent.putExtra("name","Protick Saha");
+                intent.putExtra("id", id);
+                intent.putExtra("name",username);
                 startActivity(intent);
 
             }
         });
 
-        loadClassSummary();
+
 
 
 
     }
+
     private void loadClassSummary(){
 
         String q= "SELECT * FROM ClassSummary";
-        ClassSummaryDB db = new ClassSummaryDB(this,"ClassSummaryDB.db", null, 1);
+        ClassSummaryDB db = new ClassSummaryDB(this);
         Cursor cur = db.selectClassSummary(q);
         if (cur != null){
             if (cur.getCount()>0){
@@ -83,6 +92,8 @@ public class ClassLecturesActivity extends AppCompatActivity {
         }
         db.close();
     }
+
+
 
 
 }

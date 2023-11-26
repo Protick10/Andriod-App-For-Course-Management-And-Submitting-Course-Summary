@@ -8,20 +8,19 @@ import android.content.ContentValues;
 
 import androidx.annotation.Nullable;
 
-public class ClassSummaryDB extends SQLiteOpenHelper {
+class ClassSummaryDB extends SQLiteOpenHelper{
 
-    public ClassSummaryDB(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+//    private Context context;
+
+    public ClassSummaryDB(@Nullable Context context) {
         super(context, "ClassSummaryDB.db", null, 1);
+//        this.context = context;
     }
 
-//    public void ClassSummaryDB(Context context) {
-//        super(context, "ClassSummaryDB.db", null, 1);
-//    }
-
-
-
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+
         System.out.println("DB@OnCreate");
         String sql = "CREATE TABLE ClassSummary  ("
                 + "ID TEXT PRIMARY KEY,"
@@ -29,19 +28,24 @@ public class ClassSummaryDB extends SQLiteOpenHelper {
                 + "course TEXT,"
                 + "type TEXT,"
                 + "date TEXT,"
-                + "lecture TEXT,"
+                + "lecture INTEGER,"
                 + "topic TEXT,"
                 + "summary TEXT"
                 + ")";
-        db.execSQL(sql);
+        sqLiteDatabase.execSQL(sql);
+
+
     }
+
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
         System.out.println("Write code to modify database schema here");
-        // db.execSQL("ALTER table my_table  ......");
-        // db.execSQL("CREATE TABLE  ......");
+//        // db.execSQL("ALTER table my_table  ......");
+//        // db.execSQL("CREATE TABLE  ......");
+
     }
-    public void insertClassSummary(String ID, String name, String course, String type, String date, int lecture,String topic, String summary) {
+        public void insertClassSummary(String ID, String name, String course, String type, String date, int lecture, String topic, String summary) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cols = new ContentValues();
         cols.put("ID", ID);
@@ -54,9 +58,10 @@ public class ClassSummaryDB extends SQLiteOpenHelper {
 
 
         cols.put("summary", summary);
-        db.insert("insertClassSummary", null ,  cols);
+        db.insert("ClassSummary", null ,  cols);
         db.close();
     }
+
     public void updateClassSummary(String ID, String name, String course, String type, String date, int lecture,String topic, String summary) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -74,12 +79,14 @@ public class ClassSummaryDB extends SQLiteOpenHelper {
         db.update("ClassSummary", cols, "ID=?", new String[ ] {ID} );
         db.close();
     }
+
     public void deleteClassSummary(String ID) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("ClassSummary", "ID=?", new String[ ] {ID} );
         db.close();
     }
-    public Cursor selectClassSummary(String query) {
+
+        public Cursor selectClassSummary(String query) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = null;
         try {
@@ -91,5 +98,5 @@ public class ClassSummaryDB extends SQLiteOpenHelper {
     }
 
 
-
 }
+

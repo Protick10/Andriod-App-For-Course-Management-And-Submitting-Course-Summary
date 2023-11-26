@@ -3,6 +3,7 @@ package com.example.cse489_2023_3_2020260187;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
@@ -20,13 +21,13 @@ public class ClassSummaryActivity extends AppCompatActivity {
     RadioButton radioButton1, radioButton2, radioButton3, radioButton4, radioButtonTheory, radioButtonLab;
     EditText summarydate, summaryLecture, summaryTopic, summarySummary;
 
-    String courseradio,typeradio, name;
+    String courseradio,typeradio, clssumname, clssumid;
     private EditText etTopic;
 
-    private ClassSummaryDB db;
+//    private ClassSummaryDB db;
     private ClassSummary classSummary;
 
-    int lecture_no;
+//    int lecture_no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +48,19 @@ public class ClassSummaryActivity extends AppCompatActivity {
         summaryTopic = findViewById(R.id.etTopic);
         summarySummary = findViewById(R.id.etSummary);
 
-        db = new ClassSummaryDB(ClassSummaryActivity.this,"ClassSummaryDB.db",null,1);
 
-
-        Intent intent = this.getIntent();
-        String id = intent.getStringExtra("id");
-        name = intent.getStringExtra("name");
-        summaryId.setText(id);
+        SharedPreferences localPref = getPreferences(MODE_PRIVATE);
+        clssumname = localPref.getString("name","");
+        clssumid = localPref.getString("user_id","");
+//        Intent intent = this.getIntent();
+//         clssumid = intent.getStringExtra("id");
+//        clssumname = intent.getStringExtra("name");
+        summaryId.setText(clssumid);
+        summaryName.setText(clssumname);
 
         String lecture = summaryLecture.getText().toString();
+
+//        int lecture_no = Integer.valueOf(lecture);
 
 
 
@@ -109,30 +114,61 @@ public class ClassSummaryActivity extends AppCompatActivity {
                 }
                     else {
 
-                    if (classSummary.id.isEmpty()){
+                    if (clssumid.isEmpty()){
 
-                        classSummary.id = topic + System.currentTimeMillis();
-                        db.insertClassSummary(id,name,courseradio,typeradio,summarydate.getText().toString(),Integer.valueOf(lecture),summaryTopic.getText().toString(),summarySummary.getText().toString());
+                        clssumid = topic + System.currentTimeMillis();
+                        ClassSummaryDB db = new ClassSummaryDB(ClassSummaryActivity.this);
+//                        db = new ClassSummaryDB(ClassSummaryActivity.this);
+                        db.insertClassSummary(clssumid,clssumname,courseradio,typeradio,summarydate.getText().toString(),Integer.valueOf(lecture),summaryTopic.getText().toString(),summarySummary.getText().toString());
 
-//                        Intent intent1= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
-//                        startActivity(intent1);
+                        Intent intent1= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
+                        startActivity(intent1);
+                        db.close();
                         finish();
+//
+
                     }else {
-                        db.updateClassSummary(id,name,courseradio,typeradio,summarydate.getText().toString(),Integer.valueOf(lecture),summaryTopic.getText().toString(),summarySummary.getText().toString());
-//                        Intent intent1= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
-//                        startActivity(intent1);
+                        ClassSummaryDB db = new ClassSummaryDB(ClassSummaryActivity.this);
+                        db.updateClassSummary(clssumid,clssumname,courseradio,typeradio,summarydate.getText().toString(),Integer.valueOf(lecture),summaryTopic.getText().toString(),summarySummary.getText().toString());
+
+                        Intent intent2= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
+                        startActivity(intent2);
+                        db.close();
+                        finish();
+
+
+
                     }
 
-                    Intent intent1= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
-                    startActivity(intent1);
+
+//                    Intent intent1= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
+//                    startActivity(intent1);
+
+
 
                 }
+//                System.out.println(clssumid);
+//                System.out.println(clssumname);
+//                System.out.println(courseradio);
+//                System.out.println(typeradio);
+//                System.out.println(summarydate.getText().toString());
+//                System.out.println(Integer.valueOf(lecture));
+//                System.out.println(summaryTopic.getText().toString());
+//                System.out.println(summarySummary.getText().toString());
+
+
+
 //
 //                Intent intent1= new Intent(ClassSummaryActivity.this,ClassLecturesActivity.class);
 //                startActivity(intent1);
             }
+
+
         });
     }
+
+
+
 
 
 
