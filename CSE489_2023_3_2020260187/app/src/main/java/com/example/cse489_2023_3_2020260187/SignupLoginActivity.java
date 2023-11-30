@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -127,7 +128,7 @@ public class SignupLoginActivity extends Activity {
 
                 else {
 //                    SharedPreferences Pref = SignupLoginActivity.this.getSharedPreferences("myPref", MODE_PRIVATE);
-                      SharedPreferences localPref = SignupLoginActivity.this.getPreferences(MODE_PRIVATE);
+                      SharedPreferences localPref = SignupLoginActivity.this.getSharedPreferences("localPref", MODE_PRIVATE) ;
                       SharedPreferences.Editor edit = localPref.edit();
                       edit.putString("email", email.getText().toString());
                       edit.putString("name", name.getText().toString());
@@ -138,6 +139,8 @@ public class SignupLoginActivity extends Activity {
 //                      edit.putBoolean("remember_userid", false);
 //                      edit.putBoolean("remember_passord", false);
                       edit.apply();
+                    Log.d("SharedPreferences", "Saved email: " + email.getText().toString());
+                    Log.d("SharedPreferences", "Saved name: " + name.getText().toString());
 
 
 //                    Intent intent = SignupLoginActivity.this.getIntent();
