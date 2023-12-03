@@ -16,7 +16,7 @@ public class ClassSummary {
     String description = "";
 
 
-    public ClassSummary(String id, String name, String course,String type, String date,int lecture,String topic, String description){
+    public ClassSummary(String id, String name, String course,String type, String date, int lecture, String topic, String description){
         this.id = id;
         this.name = name;
         this.course = course;
