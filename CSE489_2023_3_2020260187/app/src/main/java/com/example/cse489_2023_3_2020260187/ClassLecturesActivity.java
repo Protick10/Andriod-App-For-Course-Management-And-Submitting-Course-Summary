@@ -112,6 +112,12 @@ public class ClassLecturesActivity extends AppCompatActivity {
                 Intent i = new Intent(ClassLecturesActivity.this, ClassSummaryActivity.class);
                 i.putExtra("ClassSummaryKey", classes.get(position).id);
                 i.putExtra("CourseCode", classes.get(position).course);
+                i.putExtra("Lecture", classes.get(position).lecture);
+                i.putExtra("Topic", classes.get(position).topic);
+                i.putExtra("Date", classes.get(position).date);
+                i.putExtra("Type", classes.get(position).type);
+                i.putExtra("Summary", classes.get(position).description);
+
 
 
                 startActivity(i);

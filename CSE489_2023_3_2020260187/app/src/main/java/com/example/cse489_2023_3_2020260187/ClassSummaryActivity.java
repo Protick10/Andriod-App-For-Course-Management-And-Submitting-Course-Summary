@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +17,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.NameValuePair;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClassSummaryActivity extends AppCompatActivity {
 
     TextView summaryId, summaryName ;
@@ -24,6 +31,7 @@ public class ClassSummaryActivity extends AppCompatActivity {
     EditText summarydate, summaryLecture, summaryTopic, summarySummary;
 
     String courseradio,typeradio, clssumname, clssumid;
+    String dbID="";
     private EditText etTopic;
     int lecno;
 
@@ -106,13 +114,31 @@ public class ClassSummaryActivity extends AppCompatActivity {
                     }
 
                     // Save the class summary
-                    if (!TextUtils.isEmpty(summarydate.getText().toString()) && !TextUtils.isEmpty(summaryLecture.getText().toString()) && !TextUtils.isEmpty(summaryTopic.getText().toString()) && !TextUtils.isEmpty(summarySummary.getText().toString())) {
-                        ClassSummaryDB db = new ClassSummaryDB(ClassSummaryActivity.this);
-                        db.insertClassSummary(clssumid, clssumname, courseradio, typeradio, summarydate.getText().toString(), lecno, summaryTopic.getText().toString(), summarySummary.getText().toString());
+                    if (!TextUtils.isEmpty(summarydate.getText().toString()) && !TextUtils.isEmpty(summaryLecture.getText().toString()) &&
+                            !TextUtils.isEmpty(summaryTopic.getText().toString()) && !TextUtils.isEmpty(summarySummary.getText().toString())) {
+                        if (dbID.isEmpty()) {
+                            dbID = topic + System.currentTimeMillis();
 
-                        Intent intent1 = new Intent(ClassSummaryActivity.this, ClassLecturesActivity.class);
-                        startActivity(intent1);
-                        db.close();
+                            ClassSummaryDB db = new ClassSummaryDB(ClassSummaryActivity.this);
+                            db.insertClassSummary(dbID, clssumname, courseradio, typeradio, summarydate.getText().toString(), lecno, summaryTopic.getText().toString(), summarySummary.getText().toString());
+                            //for remote database...
+                            String keys[] = {"action", "sid", "semester", "id", "course", "type", "topic", "date", "lecture",
+                                    "summary"};
+                            String values[] = {"backup", "2020-2-60-187", "2023-3", dbID, courseradio, typeradio, summaryTopic.getText().toString(), summarydate.getText().toString(),lecture,summarySummary.getText().toString()};
+                            httpRequest(keys,values);
+                            Intent intent1 = new Intent(ClassSummaryActivity.this, ClassLecturesActivity.class);
+                            startActivity(intent1);
+                            db.close();
+                        } else {
+                            ClassSummaryDB db = new ClassSummaryDB(ClassSummaryActivity.this);
+                            db.updateClassSummary(dbID, clssumname, courseradio, typeradio, summarydate.getText().toString(), lecno, summaryTopic.getText().toString(), summarySummary.getText().toString());
+
+                            Intent intent2 = new Intent(ClassSummaryActivity.this, ClassLecturesActivity.class);
+                            startActivity(intent2);
+                            db.close();
+
+                        }
+
 //                        Log.d("ClassSummaryActivity", "Save button clicked");
                     } else {
                         // Display an error message
@@ -228,6 +254,36 @@ public class ClassSummaryActivity extends AppCompatActivity {
 
 
         });
+    }
+
+    private void httpRequest(final String keys[],final String values[]){
+        new AsyncTask<Void,Void,String>(){
+            @Override
+            protected String doInBackground(Void... voids) {
+                List<NameValuePair> params=new ArrayList<NameValuePair>();
+                for (int i=0; i<keys.length; i++){
+                    params.add(new BasicNameValuePair(keys[i],values[i]));
+                }
+                String url= "https://www.muthosoft.com/univ/cse489/index.php";
+                String data="";
+                try {
+                    data=JSONParser.getInstance().makeHttpRequest(url,"POST",params);
+                    System.out.println(data);
+                    return data;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+            protected void onPostExecute(String data){
+                if(data!=null){
+                    System.out.println(data);
+                    System.out.println("Ok2");
+                   // updateClassSummaryListByServerData(data);
+                   // Toast.makeText(getApplicationContext(),data,Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute();
     }
 
 
